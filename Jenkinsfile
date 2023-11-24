@@ -34,7 +34,7 @@ pipeline {
         }
         stage("Populate .env file") {
             steps {
-                dir("/var/lib/jenkins/workspace/envs/laurel-ci-cd") {
+                dir("/Users/nqdung3/.jenkins/workspace/envs/laurel-ci-cd") {
                     fileOperations([fileCopyOperation(excludes: '', flattenFiles: true, includes: '.env', targetLocation: "${WORKSPACE}")])
                 }
             }
