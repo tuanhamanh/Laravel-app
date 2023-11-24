@@ -35,6 +35,7 @@ pipeline {
         stage("Populate .env file") {
             steps {
                 sh 'cp .env.example .env'
+                sh 'cat .env'
             }
         }
         stage("Run Tests") {
