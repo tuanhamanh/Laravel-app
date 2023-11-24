@@ -1,13 +1,11 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'node:20.9.0-alpine3.18' }
+    }
     stages {
-        stage("Verify tooling") {
+        stage('Test') {
             steps {
-                sh '''
-                    docker info
-                    docker version
-                    docker compose version
-                '''
+                sh 'node --version'
             }
         }
     }
