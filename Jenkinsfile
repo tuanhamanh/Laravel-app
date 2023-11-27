@@ -10,6 +10,13 @@ pipeline {
                 '''
             }
         }
+         stage("Verify aws ec2 connection") {
+            steps {
+                sshagent(credentials: ['aws-ec2']) {
+                    ssh -o StrictHostKeyChecking=no ec2-user@52.63.82.121 whoami
+                }
+            }
+        }
         stage("Clear all running docker containers") {
             steps {
                 script {
