@@ -60,7 +60,7 @@ pipeline {
             sh 'zip -r artifact.zip . -x "*node_modules**"'
 
             withCredentials([sshUserPrivateKey(credentialsId: "aws-ec2", keyFileVariable: 'keyfile')]) {
-                sh 'scp -v -o StrictHostKeyChecking=no -i ${keyfile} /Users/nqdung3/.jenkins/workspace/laurel-ci-cd/artifact.zip ec2-user@13.40.116.143:/home/ec2-user/artifact'
+                sh 'scp -v -o StrictHostKeyChecking=no -i ${keyfile} /Users/nqdung3/.jenkins/workspace/laurel-ci-cd/artifact.zip ec2-user@52.63.82.121:/home/ec2-user/artifact'
             }
         }
         always {
