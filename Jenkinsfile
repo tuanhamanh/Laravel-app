@@ -62,6 +62,17 @@ pipeline {
             withCredentials([sshUserPrivateKey(credentialsId: "aws-ec2", keyFileVariable: 'keyfile')]) {
                 sh 'scp -v -o StrictHostKeyChecking=no -i ${keyfile} /Users/nqdung3/.jenkins/workspace/laurel-ci-cd/artifact.zip ec2-user@52.63.82.121:/home/ec2-user/artifact'
             }
+
+            sshagent(credentials: ['aws-ec2']) {
+                sh 'ssh -o StrictHostKeyChecking=no ec2-user@52.63.82.121 unzip -o /home/ec2-user/artifact/artifact.zip -d /var/www/html'
+                script {
+                    try {
+                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@52.63.82.121 sudo chmod 777 /var/www/html/storage -R'
+                    } catch (Exception e) {
+                        echo 'Some file permissions could not be updated.'
+                    }
+                }
+            }
         }
         always {
             sh 'docker compose down --remove-orphans -v'
