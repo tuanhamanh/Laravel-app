@@ -45,6 +45,11 @@ pipeline {
         }
     }
     post {
+        success {
+            sh 'cd /Users/nqdung3/.jenkins/workspace/laurel-ci-cd'
+            sh 'rm -rf artifact.zip'
+            sh 'zip -r artifact.zip . -x "*node_modules**"'
+        }
         always {
             sh 'docker compose down --remove-orphans -v'
             sh 'docker compose ps'
