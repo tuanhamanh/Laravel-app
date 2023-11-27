@@ -10,10 +10,12 @@ pipeline {
                 '''
             }
         }
-         stage("Verify aws ec2 connection") {
+        stage("Verify SSH connection to server") {
             steps {
                 sshagent(credentials: ['aws-ec2']) {
-                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@52.63.82.121 whoami'
+                    sh '''
+                        ssh -o StrictHostKeyChecking=no ec2-user@52.63.82.121 whoami
+                    '''
                 }
             }
         }
